@@ -1,48 +1,51 @@
 # espanso-high-density
 
-用 Espanso 快速插入中文提示词，帮助 AI 结论先行、减少冗余，并保留必要的依据和技术细节。
+用三个 Espanso 快捷词，将高信息密度表达约束插入任意 AI 聊天输入框。
 
-## 项目介绍
-
-Espanso 将快捷词展开为完整提示词。输入框在哪个平台、哪种 AI 工具中都可以使用，包括 ChatGPT、Claude、Gemini、DeepSeek 和 Coding Agent。
-
-## 为什么做这个项目
-
-AI 回复有时会铺垫过多、重复总结，或用机械化转折和空洞设问拉长表达。自定义指令可以提供长期偏好；快捷词则方便在新对话中快速加入约束，也能在长对话中随时纠偏。
+AI 回复常有长铺垫、机械转折、空洞设问和重复总结；这些快捷词可用于新对话，也能在长对话中快速纠偏。
 
 ## 快捷词
 
-| 触发词 | 功能 | 使用场景 |
-| --- | --- | --- |
-| <code>:hd-style</code> | 插入完整的高信息密度表达约束 | 新对话开始时使用 |
-| <code>:hd-fix</code> | 要求 AI 按约束重写上一条回复 | 回复冗长、铺垫或重复较多时 |
-| <code>:hd-reset</code> | 重新强调约束，要求后续回复继续遵守 | 长对话中风格逐渐偏离时 |
+| 触发词 | 用途 |
+| --- | --- |
+| `:hd-style` | 插入完整表达约束，适合新对话 |
+| `:hd-fix` | 按约束重写上一条回复 |
+| `:hd-reset` | 重申约束，要求后续回复持续遵守 |
 
 ## 安装
 
-1. 按照 [Espanso 官网安装说明](https://espanso.org/install/)安装并启动 Espanso。
-2. 在终端运行 <code>espanso path</code>，找到当前配置目录。常见默认位置：
-   - Windows：<code>%APPDATA%\espanso</code>
-   - macOS：<code>$HOME/Library/Application Support/espanso</code>
-   - Linux：<code>$XDG_CONFIG_HOME/espanso</code>，通常是 <code>~/.config/espanso</code>
-3. 将本项目的 [<code>match/high-density.yml</code>](match/high-density.yml) 复制到配置目录的 <code>match/</code> 文件夹中。例如 Windows 路径通常为 <code>%APPDATA%\espanso\match\high-density.yml</code>。如果 <code>match/</code> 不存在，请先创建。
-4. Espanso 通常会自动重新加载配置；如果没有生效，按官网文档重启 Espanso。打开任意文本输入框，输入一个触发词确认展开。
+### 交给 Coding Agent
 
-更多配置目录信息见 [Espanso 配置文档](https://espanso.org/docs/configuration/basics/)；首次运行和故障排查见 [Getting Started](https://espanso.org/docs/get-started/)。
+将下面的提示词复制给 Codex、Claude Code 或其他能操作本机文件的 Coding Agent：
 
-## 使用示例
+```text
+请在这台电脑安装 Espanso 的 espanso-high-density 配置：
+https://github.com/AatroxChen77/espanso-high-density
 
-- 开始新对话：输入 <code>:hd-style</code>，让完整约束展开，再补充具体问题。
-- 回复需要精简：输入 <code>:hd-fix</code>，要求 AI 重写上一条回复。
-- 长对话风格偏离：输入 <code>:hd-reset</code>，要求后续回复继续遵守约束。
+1. 识别操作系统并检查 Espanso 是否已安装、正在运行。未安装时，按 Espanso 官方安装说明安装；如需管理员权限或系统授权，告诉我需要完成的操作，不要绕过授权。
+2. 运行 `espanso path` 获取实际配置目录，不要猜路径。只检查活动 match 配置中的三个目标 trigger，并获取仓库里的 `match/high-density.yml`。若仓库暂不可访问，说明原因并等我提供文件；不要输出无关个人配置。
+3. 安装前比较三个 trigger 和完整替换文本。相同定义视为已安装；若只缺少部分定义，只补缺少项，避免重复 trigger。若同名 trigger 的替换内容不同，或目标文件含有其他配置，不要覆盖；报告冲突文件和 trigger，等我决定。
+4. 无冲突时，只将缺少的定义写入实际配置目录的 `match/high-density.yml`，保留已有文件内容。目标文件已存在时，确认其中仅有本项目定义后再补齐；含有无关配置则按第 3 条停止。若三个定义均已存在且相同，不做写入。
+5. 安装后确认 Espanso 正在运行并已加载配置；可用 `espanso status` 或系统托盘、进程状态检查运行情况。若未运行则启动；若运行中但未加载则按需重启，再检查日志或 CLI 结果。使用当前版本支持的 `espanso match list` 命令核实三个 trigger 均已注册，且替换文本正确。
+6. 若无法安全地自动验证实际展开，请告诉我在空白文本框中逐个输入三个 trigger 手动测试；不要把测试文本发送到 AI 对话。
+7. 汇报安装路径、修改内容、运行与加载状态、trigger 检查结果，以及仍需我手动完成的步骤。不要改动其他 Espanso 配置。
+```
 
-## 设计理念
+### 手动安装
 
-用更低的阅读成本传递更多有效信息。简单问题简短回答；复杂问题保留必要的推理依据、证据和技术细节。它是一组实用的 Espanso 文本扩展配置，不是 AI Agent 框架。
+1. 按照 [Espanso 官方说明](https://espanso.org/install/)安装并启动 Espanso。
+2. 运行 `espanso path` 获取配置目录。常见默认位置：Windows `%APPDATA%\espanso`；macOS `$HOME/Library/Application Support/espanso`；Linux `$XDG_CONFIG_HOME/espanso`（通常为 `~/.config/espanso`）。
+3. 将 [`match/high-density.yml`](match/high-density.yml) 复制到配置目录的 `match/` 文件夹。等待自动重载；若未生效，运行 `espanso restart`。在空白文本框中输入三个 trigger 检查展开。
+
+配置路径详见 [Espanso 配置文档](https://espanso.org/docs/configuration/basics/)；运行与故障排查见 [Getting Started](https://espanso.org/docs/get-started/)。
+
+## 表达原则
+
+简单问题简短回答；复杂问题保留必要的依据、推理和技术细节。
 
 ## English
 
-A small Espanso match set for inserting concise, high-information writing instructions into any AI chat input. It helps reduce unnecessary preambles, repetitive summaries, and formulaic contrasts while preserving useful reasoning and technical detail.
+A small Espanso match set for concise, high-information AI replies across chat tools. It reduces unnecessary preambles and repetition while preserving useful reasoning and technical detail.
 
 ## License
 
