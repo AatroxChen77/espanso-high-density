@@ -35,7 +35,7 @@ https://github.com/AatroxChen77/espanso-high-density
 
 1. 按照 [Espanso 官方说明](https://espanso.org/install/)安装并启动 Espanso。
 2. 运行 `espanso path` 获取配置目录。常见默认位置：Windows `%APPDATA%\espanso`；macOS `$HOME/Library/Application Support/espanso`；Linux `$XDG_CONFIG_HOME/espanso`（通常为 `~/.config/espanso`）。
-3. 将 [`match/high-density.yml`](match/high-density.yml) 复制到配置目录的 `match/` 文件夹。等待自动重载；若未生效，运行 `espanso restart`。在空白文本框中输入三个 trigger 检查展开。
+3. 将 [`match/high-density.yml`](match/high-density.yml) 复制到配置目录的 `match/` 文件夹。如果目标目录已经存在 `high-density.yml`，请先检查内容，避免覆盖已有配置。等待自动重载；若未生效，运行 `espanso restart`。在空白文本框中输入三个 trigger 检查展开。
 
 配置路径详见 [Espanso 配置文档](https://espanso.org/docs/configuration/basics/)；运行与故障排查见 [Getting Started](https://espanso.org/docs/get-started/)。
 
